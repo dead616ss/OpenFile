@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             val fileName = "getExternalStorageDirectory.txt"
             val contentData = "getExternalFilesDir(Environment.DIRECTORY_MUSIC) demo pruebas y cambios"
             val path = File(Environment.getExternalStorageDirectory().path,"/temp")
-            this.fileDataToPathBase64(path, fileName,contentData )
+            this.fileDataToPathBase64(path, fileName/*,contentData */)
         }
     }
 
@@ -232,15 +232,15 @@ class MainActivity : AppCompatActivity() {
 
     /**************************implementacion base64***************************/
 
-    private fun fileDataToPathBase64(path: File, fileName: String, data:String): String {
+    private fun fileDataToPathBase64(path: File, fileName: String/*, data:String*/): String {
    val targetFilePath = File(path, fileName)
    val inputStream: InputStream?
    var encodedFile = ""
    val lastVal: String
 
    try {
-       val fos =  FileOutputStream(targetFilePath)
-       fos.write(data.toByteArray())
+       /*val fos =  FileOutputStream(targetFilePath)
+       fos.write(data.toByteArray())*/
        inputStream = FileInputStream(targetFilePath)
        Log.i("Message","Ruta: $targetFilePath")
        val buffer = ByteArray(1024)
