@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
             this.writeDataToPath(path, fileName, contentData);*/
             /*_________________________________________________*/
 
-            savefile()
-            //retrivefile()
+            //savefile()
+            retrivefile()
 
             /******************************base64***********************/
             /*val path = File(Environment.getExternalStorageDirectory(),"temp")
