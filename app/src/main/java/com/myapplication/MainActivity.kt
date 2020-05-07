@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
 
     fun savefile(){
         if (isExternalStorageWritable() && checkExternalStoragePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            val path = Environment.getExternalStorageDirectory().absolutePath + "/temp/app"
+            val path = Environment.getExternalStorageDirectory().absolutePath + "/temp"
             val dir = File(path)
             if (!dir.exists()) {
                 dir.mkdir()
