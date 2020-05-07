@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import java.io.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,17 +32,15 @@ class MainActivity : AppCompatActivity() {
 
         open.setOnClickListener{
 
-            /*val typefile = "VID_20200506_141204.mp4"
-            val selectedVideoFilePath = typefile  // 1
-            val path = File(Environment.getExternalStorageDirectory().absolutePath,"/DCIM/Camera")
-            val selectedVideoFile = File(path,selectedVideoFilePath)  // 2
+            /*val typefile = "VID_20200506_222246.mp4" //6
+            val path = File(Environment.getExternalStorageDirectory().absolutePath,"/DCIM/Camera/file")
+            val selectedVideoFile = File(path, typefile)  // 2
             Log.i("Mensaje","Directorio: $selectedVideoFile")
             //val selectedVideoFile = File(Environment.getExternalStorageDirectory(),selectedVideoFilePath)  // 2
             //val selectedVideoFile = File(selectedVideoFilePath)  // 2
             val selectedVideoFileExtension : String = selectedVideoFile.extension  // 3
             val internalStorageVideoFileName : String = UUID.randomUUID().toString().plus(selectedVideoFileExtension)  // 4
-            this.storeFileInInternalStorage(selectedVideoFile, internalStorageVideoFileName)
-*/
+            this.storeFileInInternalStorage(selectedVideoFile, internalStorageVideoFileName)*/
 
             /***********************************************************************************/
             //Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
@@ -88,14 +87,14 @@ class MainActivity : AppCompatActivity() {
             /*_________________________________________________*/
 
             //savefile()
-            retrivefile()
+            //retrivefile()
 
             /******************************base64***********************/
-            /*val path = File(Environment.getExternalStorageDirectory(),"temp")
             val fileName = "getExternalStorageDirectory.txt"
-            this.fileDataToPathBase64(path, fileName)*/
+            val contentData = "getExternalFilesDir(Environment.DIRECTORY_MUSIC) demo pruebas y cambios"
+            val path = File(Environment.getExternalStorageDirectory().path,"/temp")
+            this.fileDataToPathBase64(path, fileName,contentData )
         }
-
     }
 
 
@@ -130,8 +129,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun storeFileInInternalStorage(selectedFile: File, internalStorageFileName: String) {
         val inputStream = FileInputStream(selectedFile) // 1
+        val outputStream =  application.openFileOutput(internalStorageFileName, Context.MODE_PRIVATE) //2
         try {
-            val outputStream = application.openFileOutput(internalStorageFileName, Context.MODE_PRIVATE) //2
             val buffer = ByteArray(2048)
             inputStream.use {  // 3
                 while (true) {
@@ -139,21 +138,17 @@ class MainActivity : AppCompatActivity() {
                     if (byeCount < 0) break
                     outputStream.write(buffer, 0, byeCount)  // 5
                 }
-                //outputStream.close()  // 6
+                outputStream.close()  // 6
             }
         }catch (e: FileNotFoundException){
             e.printStackTrace()
             Log.i("Message","Failed: ${e.message} ")
         }finally {
-            if (inputStream != null) {
-                try {
-                    Toast.makeText(this,"Write to <" + selectedFile.absolutePath + "> successfully!",Toast.LENGTH_LONG).show()
-                    inputStream.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            } else {
-                Toast.makeText(this, "Failed to Read!", Toast.LENGTH_LONG).show()
+            try {
+                Toast.makeText(this,"Write to <" + selectedFile.absolutePath + "> successfully!",Toast.LENGTH_LONG).show()
+                inputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
         }
 
@@ -208,7 +203,7 @@ class MainActivity : AppCompatActivity() {
         try {
             fos = FileInputStream(targetFilePath)
             fos.close()
-        }catch (e: IOException){
+        }catch (e: FileNotFoundException){
             e.printStackTrace()
             Toast.makeText(this, "Failed: " + e.message, Toast.LENGTH_LONG).show()
         }finally {
@@ -227,7 +222,7 @@ class MainActivity : AppCompatActivity() {
 
     fun retrivefile(){
         if (isExternalStorageWritable() && checkExternalStoragePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            val path = Environment.getExternalStorageDirectory().absolutePath + "/temp/"
+            val path = Environment.getExternalStorageDirectory().absolutePath + "/temp"
             val fileName = "getExternalStorageDirectory.txt"
             this.retriveDataPath(path, fileName)
         }else{
@@ -237,14 +232,17 @@ class MainActivity : AppCompatActivity() {
 
     /**************************implementacion base64***************************/
 
-    private fun fileDataToPathBase64(path: File, fileName: String): String {
+    private fun fileDataToPathBase64(path: File, fileName: String, data:String): String {
    val targetFilePath = File(path, fileName)
-   var inputStream: InputStream?
+   val inputStream: InputStream?
    var encodedFile = ""
    val lastVal: String
 
    try {
+       val fos =  FileOutputStream(targetFilePath)
+       fos.write(data.toByteArray())
        inputStream = FileInputStream(targetFilePath)
+       Log.i("Message","Ruta: $targetFilePath")
        val buffer = ByteArray(1024)
        var bytesRead: Int
        val outPut = ByteArrayOutputStream()
