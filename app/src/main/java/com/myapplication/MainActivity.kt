@@ -4,23 +4,26 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.StatFs
+import android.provider.ContactsContract
 import android.util.Base64
 import android.util.Base64OutputStream
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import java.io.*
-import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity()  {
 
 
     @SuppressLint("SdCardPath")
@@ -29,10 +32,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var open = findViewById<Button>(R.id.buttonopen)
+        var search = findViewById<Button>(R.id.search)
+        var nameSearch = findViewById<EditText>(R.id.editText)
+
+        search.setOnClickListener(){
+            val text = nameSearch.text.toString()
+            Log.i("Name","$text")
+            getSearchContact(text)
+        }
 
         open.setOnClickListener{
 
-            /*val typefile = "VID_20200506_222246.mp4" //6
+           /* val typefile = "VID_20200506_222246.mp4" //6
             val path = File(Environment.getExternalStorageDirectory().absolutePath,"/DCIM/Camera/file")
             val selectedVideoFile = File(path, typefile)  // 2
             Log.i("Mensaje","Directorio: $selectedVideoFile")
@@ -90,12 +101,25 @@ class MainActivity : AppCompatActivity() {
             //retrivefile()
 
             /******************************base64***********************/
-            val fileName = "getExternalStorageDirectory.txt"
+            /*val fileName = "getExternalStorageDirectory.txt"
             val contentData = "getExternalFilesDir(Environment.DIRECTORY_MUSIC) demo pruebas y cambios"
-            val path = File(Environment.getExternalStorageDirectory().path,"/temp")
-            this.fileDataToPathBase64(path, fileName/*,contentData */)
+
+            //val path = File(Environment.getExternalStorageDirectory().path,"/temp")
+            val dir = File(Environment.getExternalStorageDirectory().path)
+            val path: String = File(dir,"/temp").toString()
+            this.fileDataToPathBase64(path, fileName*//*,contentData *//*)*/
+
+            /***********************allcontacts**************************/
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getAllContactsVcardUri()
+            }*/
+            /**************************contactos**************************/
+            getContacts()
+            //getSearchContact()
         }
     }
+
+
 
 
     // Available Memory
@@ -232,7 +256,7 @@ class MainActivity : AppCompatActivity() {
 
     /**************************implementacion base64***************************/
 
-    private fun fileDataToPathBase64(path: File, fileName: String/*, data:String*/): String {
+    private fun fileDataToPathBase64(path: String, fileName: String/*, data:String*/): String {
    val targetFilePath = File(path, fileName)
    val inputStream: InputStream?
    var encodedFile = ""
@@ -260,7 +284,185 @@ class MainActivity : AppCompatActivity() {
    return lastVal
 }
 
+    /*************************************************************************************************************/
+
+    /************************contactos*************************/
+
+
+   /* @SuppressLint("Recycle")
+    fun getContacts():List<Map<String,String>> {
+        val contacts = ArrayList<Map<String,String>>()
+        val uniqueValues = HashSet<String>()
+
+        val uri =  ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+
+        val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE)
+
+        //val people = mainActivity.baseContext.applicationContext.contentResolver.query(uri, projection, null, null, null)
+        val people = contentResolver.query(uri, projection, null, null, null)
+
+        println("----people=${people}---------")
+        val indexName = people!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+        val indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val indexPhoneType = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
+
+
+        people.moveToFirst()
+        do {
+            if (!uniqueValues.contains(people.getString(indexNumber))) {
+                val contactsModel = HashMap<String,String>()
+                contactsModel["displayName"] = people.getString(indexName)
+                contactsModel["mobileNumber"] = people.getString(indexNumber)
+                contactsModel["phoneType"] = people.getString(indexPhoneType)
+
+                uniqueValues.add(people.getString(indexNumber))
+                contacts.add(contactsModel)
+                println("---Step 2.n---contactsModel=${contactsModel}")
+            }
+        } while (people.moveToNext())
+        println("---Step 3---contacts=${contacts}")
+        return contacts
+    }*/
+
+    @SuppressLint("Recycle")
+    fun getContacts():List<Map<String,String>> {
+        val contacts = ArrayList<Map<String,String>>()
+        val uniqueValues = HashSet<String>()
+
+        val uri =  ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+
+        val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE)
+
+        //val people = mainActivity.baseContext.applicationContext.contentResolver.query(uri, projection, null, null, null)
+        val people = contentResolver.query(uri, projection, null, null, null)
+
+        println("----people=${people}---------")
+        val indexName = people!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+        val indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val indexPhoneType = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
+
+
+        people.moveToFirst()
+        do {
+            if (!uniqueValues.contains(people.getString(indexNumber))) {
+                val contactsModel = HashMap<String,String>()
+                contactsModel["displayName"] = people.getString(indexName)
+                contactsModel["mobileNumber"] = people.getString(indexNumber)
+                contactsModel["phoneType"] = people.getString(indexPhoneType)
+
+                uniqueValues.add(people.getString(indexNumber))
+                contacts.add(contactsModel)
+                println("---Step 2.n---contactsModel=${contactsModel}")
+            }
+        } while (people.moveToNext())
+        println("---Step 3---contacts=${contacts}")
+        return contacts
+    }
+
+    /*********************************************************************************************************/
+    /*************************************************all contacts********************************************/
+
+    /*@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun getAllContactsVcardUri(): Uri? {
+        val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
+            arrayOf(ContactsContract.Contacts.LOOKUP_KEY),null,null,null)
+
+        if (cursor == null){
+            return null
+        }
+        try {
+            val uriListBuilder = StringBuilder()
+            var index = 0
+            while (cursor.moveToNext()){
+                if (index != 0)
+                    uriListBuilder.append(':')
+                index++
+            }
+            Log.i("Messega","contacts: $cursor")
+            return Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_MULTI_VCARD_URI,Uri.encode(uriListBuilder.toString()))
+        }finally {
+            cursor.close()
+        }
+    }*/
+
+    /*****************************search*********************************/
+
+   /* @SuppressLint("Recycle")
+    fun getSearchContact(): ArrayList<Map<String, String>> {
+        val contacts = ArrayList<Map<String,String>>()
+        //val contacts = ArrayList<String>()
+        val uniqueValues = HashSet<String>()
+
+        val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+
+        // Sets the columns to retrieve for the user contacts
+       val projection = arrayOf(
+            ContactsContract.CommonDataKinds.Phone._ID,
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER
+        )
+
+        // Retrieves the contact from the Contacts Provider
+        val profileCursor = contentResolver.query(uri, projection,null,null,null)
+
+
+
+        profileCursor!!.moveToFirst()
+        do{
+            if (!uniqueValues.contains(profileCursor.getString(1))){
+                val contactsModel = HashMap<String,String>()
+                contactsModel["displaName"] = profileCursor.getString(1)
+                contactsModel["mobileNumber"] = profileCursor.getString(2)
+                uniqueValues.add(profileCursor.getString(1))
+                contacts.add(contactsModel)
+                println("ContactArray: ${profileCursor.getString(1)} " + " ${profileCursor.getString(2)}")
+            }
+        }while (profileCursor.moveToNext())
+        return contacts
+
+    }*/
+
+    /*******************************************************************************************************************/
+
+    @SuppressLint("Recycle")
+    fun getSearchContact(nameSearch : String): ArrayList<Map<String, String>> {
+        val contacts = ArrayList<Map<String,String>>()
+
+        val uniqueValues = HashSet<String>()
+
+        val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI,Uri.encode(nameSearch))
+
+        // Sets the columns to retrieve for the user contacts
+        val projection = arrayOf(
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.Contacts.HAS_PHONE_NUMBER)
+
+        // Retrieves the contact from the Contacts Provider
+        val profileCursor = contentResolver.query(uri, projection,null,null,"DISPLAY_NAME ASC")
+        profileCursor!!.moveToFirst()
+
+       do{
+            if (profileCursor.count > 0){
+                val contactsModel = HashMap<String,String>()
+                if(!uniqueValues.contains(profileCursor.getString(1))){
+                contactsModel["idName"] = profileCursor.getString(0)
+                contactsModel["displayName"] = profileCursor.getString(1)
+                contactsModel["mobileNumber"] = profileCursor.getString(2)
+                uniqueValues.add(profileCursor.getString(1))
+                contacts.add(contactsModel)
+                println("ContactArray: ${profileCursor.getString(1)} " + " ${profileCursor.getString(2)}")
+                }
+            }
+       }
+           while (profileCursor.moveToNext())
+            profileCursor.close()
+        return contacts
+    }
 }
+
+
+
 
 
 
