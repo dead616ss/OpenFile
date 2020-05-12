@@ -20,10 +20,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import java.io.*
+import com.myapplication.camera.ActivityQR
 
 
 
-class MainActivity : AppCompatActivity()  {
+class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("SdCardPath")
@@ -37,8 +38,10 @@ class MainActivity : AppCompatActivity()  {
 
         search.setOnClickListener(){
             val text = nameSearch.text.toString()
-            Log.i("Name","$text")
+            Log.i("Search Name","$text")
             getSearchContact(text)
+
+
         }
 
         open.setOnClickListener{
@@ -430,16 +433,16 @@ class MainActivity : AppCompatActivity()  {
 
         val uniqueValues = HashSet<String>()
 
-        val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI,Uri.encode(nameSearch))
+        val uri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI,Uri.encode(nameSearch))
 
         // Sets the columns to retrieve for the user contacts
         val projection = arrayOf(
-            ContactsContract.Contacts._ID,
-            ContactsContract.Contacts.DISPLAY_NAME,
-            ContactsContract.Contacts.HAS_PHONE_NUMBER)
+            ContactsContract.CommonDataKinds.Phone._ID,
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER)
 
         // Retrieves the contact from the Contacts Provider
-        val profileCursor = contentResolver.query(uri, projection,null,null,"DISPLAY_NAME ASC")
+        val profileCursor = contentResolver.query(uri, projection, null,null,"DISPLAY_NAME ASC")
         profileCursor!!.moveToFirst()
 
        do{
@@ -453,12 +456,18 @@ class MainActivity : AppCompatActivity()  {
                 contacts.add(contactsModel)
                 println("ContactArray: ${profileCursor.getString(1)} " + " ${profileCursor.getString(2)}")
                 }
+            }else{
+                Log.i("Message","Contact does not exist")
             }
        }
            while (profileCursor.moveToNext())
             profileCursor.close()
         return contacts
     }
+
+    /*****************************************scanfunctionalityservice******************************************/
+
+
 }
 
 

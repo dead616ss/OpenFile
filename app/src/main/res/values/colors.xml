@@ -3,4 +3,19 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="blanco">#ffffff</color>
+    <color name="gris">#B4B4B4</color>
+    <color name="negro">#000000</color>
+    <color name="naranja">#F44336</color>
+    <color name="rojo">#F31E0F</color>
+    <color name="rojo_video">#B40F03</color>
+    <color name="gris_fuerte">#7E7E7E</color>
+    <color name="gris_claro">#D5D4D4</color>
+
+    <color name="verde_clar">#313C3A</color>
+
+    <color name="gris_oscuro">#6B6A6A</color>
+    <color name="naranja_2">#ffff900d</color>
+    <color name="transparente">#00000000</color>
+    <color name="gris_camera">#838383</color>
 </resources>

@@ -22,7 +22,7 @@ class ContactActivity :Activity() {
 
     fun findDetail() {
 
-        var result: Array<String>? = null
+        var result: Array<String>?
 
         // Find a contact using a partial name match
         val searchName = "P"
@@ -69,7 +69,7 @@ class ContactActivity :Activity() {
 
                 // Extract the phone number.
                 val number = dataCursor.getString(phoneIdx)
-                result?.set(dataCursor.position, "$name($number)")
+                result[dataCursor.position] = "$name($number)"
                 Toast.makeText(this, "$name($number)", Toast.LENGTH_SHORT).show()
             }
             dataCursor.close()

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/blanco"
+
+>
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="vertical">
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/negro"
+        >
+            <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/negro"
+                    android:src="@drawable/ic_back"
+
+            />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo_claro_pay_wokko"
+
+            />
+            <ImageButton
+                    android:id="@+id/btn_close"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="right"
+                    android:background="@color/negro"
+                    android:rotation="180"
+                    android:src="@drawable/ic_closev2"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:padding="16dp"
+
+            />
+        </FrameLayout>
+
+    </LinearLayout>
+    <LinearLayout
+            android:background="@color/gris_claro"
+            android:padding="12dp"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        <LinearLayout
+
+                android:orientation="vertical"
+                android:background="@color/blanco"
+                android:weightSum="100"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <LinearLayout
+                    android:id="@+id/linear_camera"
+                    android:visibility="gone"
+                    android:layout_weight="25"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:weightSum="100"
+                    android:layout_gravity="center"
+            >
+
+
+                <ImageView
+                        android:id="@+id/img_camera"
+                        android:layout_margin="12dp"
+                        android:layout_weight="50"
+                        android:layout_width="fill_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_question_one"
+                        android:scaleType="fitCenter"
+                />
+                <TextView
+                        android:textColor="@color/verde_clar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Escanear código"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/linear_tittle"
+                    android:layout_weight="25"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:weightSum="100"
+                    android:layout_gravity="center"
+            >
+                <ImageView
+                        android:visibility="invisible"
+                        android:layout_weight="15"
+                        android:layout_width="0dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_action_question"
+                        android:scaleType="fitCenter"
+                />
+                <TextView
+                        android:layout_weight="70"
+                        android:id="@+id/tv_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/instrucciones_qr"
+                        android:textColor="@color/gris_fuerte"
+                />
+                <ImageView
+
+                        android:layout_weight="15"
+                        android:layout_width="0dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_question_one"
+                        android:scaleType="fitCenter"
+                />
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/linear_qr"
+                    android:visibility="visible"
+                    android:layout_weight="50"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp">
+
+                <FrameLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:weightSum="100"
+                            android:orientation="vertical"
+
+                    >
+                        <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:weightSum="100"
+                                android:layout_weight="15"
+
+                        >
+
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:weightSum="100"
+                                android:layout_weight="70"
+                                android:orientation="horizontal"
+                        >
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="fill_parent"
+                                    android:weightSum="100"
+                                    android:layout_weight="12"
+
+
+                            >
+
+                            </LinearLayout>
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="fill_parent"
+                                    android:weightSum="100"
+                                    android:layout_weight="76"
+
+
+                            >
+                                <com.bobekos.bobek.scanner.BarcodeView
+                                        android:id="@+id/barcodeView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        custom:setBarcodeFormats="all"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="fill_parent"
+                                    android:weightSum="100"
+                                    android:layout_weight="12"
+
+
+                            >
+
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="0dp"
+                                android:weightSum="100"
+                                android:layout_weight="15"
+
+
+                        >
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <ImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:src="@drawable/img_background_camera4"
+                            android:scaleType="fitXY"
+                            android:padding="36dp"
+                    />
+
+                </FrameLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_weight="25"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:weightSum="100"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+            >
+
+                <LinearLayout
+                        android:layout_weight="85"
+                        android:weightSum="100"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                >
+                    <TextView
+                            android:layout_marginTop="16dp"
+                            android:textStyle="bold"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text=" Ó ingresa el código manualmente"
+                            android:textColor="@color/verde_clar"
+                    />
+                    <EditText
+                            android:id="@+id/ed_datos"
+                            android:maxLength="30"
+                            android:textStyle="normal"
+                            android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:textSize="14dp"
+                            android:hint="Ingresa los dígitos como viene en tu recibo"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                    />
+                    <LinearLayout
+                            android:visibility="gone"
+                            android:id="@+id/linear_button_capturar"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                        <Button
+                                android:id="@+id/btn_enviar"
+                                android:layout_width="fill_parent"
+                                android:layout_height="?attr/actionBarSize"
+                                android:layout_gravity="center|bottom"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/button_capturar_false"
+                                android:padding="12dp"
+                                android:scaleType="centerCrop"
+                                android:text="Enviar"
+                                android:textColor="@color/blanco"
+                        />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

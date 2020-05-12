@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">OpenFile</string>
+    <string name="text_intrucciones">Captura de los datos  de la parte frontal de tu INE</string>
+    <string name="text_intrucciones2">Captura de los datos de la parte posterior de tu INE</string>
+    <string name="text_intrucciones1_bottom">    Ubica tu identificación dentro del marco para poder tomar la fotografía, recuerda usar un fondo liso.</string>
+    <string name="text_info_captura">Asegúrate de que los datos de tu INE pueden leerse de forma clara en la fotografía.</string>
+    <string name="picture">Picture</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">Esta funcionalidad necesita acceso a la camara.</string>
+    <string name="camera_error">Este dispositivo no tienen habilitada la funcionalidad de camara.</string>
+    <string name="intro_message">
+        <![CDATA[
+
+            Scan OCR INE/IFE
+
+
+        ]]>
+    </string>
+    <string name="instrucciones_qr">Asegurate de que el código se encuentre dentro del área del escáner</string>
+    <string name="instrucciones_captura">Ó ingresa el código manualmente</string>
 </resources>
